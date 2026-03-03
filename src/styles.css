@@ -392,7 +392,7 @@ html, body, #root {
 .tab-context-item {
   display: block;
   width: 100%;
-  padding: 6px 14px;
+  padding: 8px 14px;
   background: none;
   border: none;
   color: var(--text-primary);

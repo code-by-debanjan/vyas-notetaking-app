@@ -113,7 +113,7 @@ function TabBar({ tabs, activeTabId, onSelectTab, onCloseTab, onNewTab }: TabBar
             </button>
           )}
         </div>,
-        document.body
+        document.querySelector('.app') || document.body
       )}
     </>
   );
