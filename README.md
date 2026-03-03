@@ -1,60 +1,135 @@
-# VYASA: Compile Your Epic
+<div align="center">
 
-A feature-rich desktop note-taking application built with **Tauri 2 + React + TypeScript**. Vyasa combines the simplicity of a text editor with modern UI design — glass-effect styling, system font selection, side-by-side file comparison, and screenshot capture.
+<img src="public/logo.png" alt="Vyasa Logo" width="120" />
 
-_For Indians, by an Indian._
+# VYASA
 
-> **Current Version:** 1.0.3
+### Compile Your Epic
 
-## Features
+A powerful, lightweight desktop note-taking app built with **Tauri 2 + React + TypeScript**.  
+Glass-effect styling. System fonts. Side-by-side diffing. Screenshot capture. All in ~5MB.
 
-- **Multi-tab editing** — Open and work on multiple files simultaneously
-- **File operations** — New, Open, Save, Save As with native OS dialogs
-- **Recent Open** — Quick access to recently opened files from the File menu
+_For Indians, by an Indian._ 🇮🇳
+
+[![Version](https://img.shields.io/badge/version-1.0.4-7c3aed?style=for-the-badge)](https://github.com/code-by-debanjan/vyasa-notetaking-app/releases)
+[![Built with Tauri](https://img.shields.io/badge/Built_with-Tauri_2-ffc131?style=for-the-badge&logo=tauri&logoColor=white)](https://v2.tauri.app/)
+[![React](https://img.shields.io/badge/React-18-61dafb?style=for-the-badge&logo=react&logoColor=white)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6?style=for-the-badge&logo=typescript&logoColor=white)](https://typescriptlang.org/)
+[![License](https://img.shields.io/badge/license-All_Rights_Reserved-gray?style=for-the-badge)](#license)
+
+</div>
+
+---
+
+## 🖼️ Screenshots
+
+> **Add your screenshots to the `screenshots/` folder** and they'll show up here automatically.
+
+<div align="center">
+
+| Dark Theme | Light Theme |
+|:---:|:---:|
+| ![Dark Theme](screenshots/dark-theme.png) | ![Light Theme](screenshots/light-theme.png) |
+
+| Compare View | Font Selector |
+|:---:|:---:|
+| ![Compare View](screenshots/compare-view.png) | ![Font Selector](screenshots/font-selector.png) |
+
+</div>
+
+---
+
+## ✨ Features
+
+<table>
+<tr>
+<td width="50%">
+
+### 📝 Editor
+- **Multi-tab editing** — Work on multiple files simultaneously
 - **Find & Replace** — Full-text search with replace support
-- **Compare Files** — Side-by-side diff view of consecutive open tabs with inline editing
-- **System font selector** — Searchable dropdown with keyboard navigation for all installed fonts
-- **Screenshot capture** — Save the editor or compare view as PNG to your Pictures folder
-- **Glass UI** — Backdrop-filter blur effects with purple accent theming
-- **Custom title bar** — Branded title bar with Vyasa logo
-- **Dark/Light themes** — Switch from the View menu; theme persists across restarts
-- **Line numbers** — Gutter with line number display
-- **Word wrap** — Toggle via View menu
+- **Line numbers** — Clean gutter display
+- **Word wrap** — Toggle from the View menu
 - **Zoom** — Ctrl+/Ctrl- to adjust font size
-- **Status bar** — Line, column, word count, character count, file name, encoding
-- **Keyboard shortcuts** — Full set of standard shortcuts
-- **Unsaved changes detection** — Custom save prompt with format warning before closing modified files
-- **Session persistence** — Tabs and content are restored when you reopen the app
-- **File associations** — Open `.txt`, `.md`, `.json`, `.log`, `.csv`, `.xml`, `.html`, `.css`, `.js`, `.ts` files directly with Vyasa from Windows Explorer
-- **Single instance** — Opening a file when Vyasa is already running opens it as a new tab instead of launching a second window
+- **System font selector** — Searchable dropdown with all installed fonts
 
-## Keyboard Shortcuts
+</td>
+<td width="50%">
 
-| Shortcut     | Action          |
-| ------------ | --------------- |
-| Ctrl+N       | New File        |
-| Ctrl+O       | Open File       |
-| Ctrl+S       | Save            |
-| Ctrl+Shift+S | Save As         |
-| Ctrl+W       | Close Tab       |
-| Ctrl+F       | Find            |
-| Ctrl+H       | Find & Replace  |
-| Ctrl+Shift+C | Compare Files   |
-| Ctrl+Shift+P | Take Screenshot |
-| Ctrl++       | Zoom In         |
-| Ctrl+-       | Zoom Out        |
+### 📂 File Management
+- **Full file ops** — New, Open, Save, Save As with native OS dialogs
+- **Any file type** — Save as `.txt`, `.config`, `.json`, `.yaml`, or any extension
+- **Recent files** — Quick access from the File menu
+- **File associations** — Open files directly from Windows Explorer
+- **Single instance** — New files open as tabs, not new windows
+- **Session persistence** — Tabs restored on reopen
 
-## Prerequisites
+</td>
+</tr>
+<tr>
+<td width="50%">
 
-1. **Node.js** (v18+) — [nodejs.org](https://nodejs.org)
-2. **Rust** — Install via [rustup.rs](https://rustup.rs)
-3. **Visual Studio Build Tools** — Required on Windows for Rust:
-   ```powershell
-   # Run as Administrator:
-   winget install Microsoft.VisualStudio.2022.BuildTools --override "--wait --passive --add Microsoft.VisualStudio.Workload.VCTools --includeRecommended"
-   ```
+### 🎨 Interface
+- **Glass UI** — Backdrop-filter blur with purple accent theming
+- **Dark/Light themes** — Persists across restarts
+- **Custom title bar** — Branded with Vyasa logo
+- **Status bar** — Line, column, word/char count, encoding
+- **Unsaved changes detection** — Custom save prompt dialog
 
-## Getting Started
+</td>
+<td width="50%">
+
+### 🔧 Power Tools
+- **Compare Files** — Side-by-side diff with inline editing
+- **Screenshot capture** — Save editor/compare view as PNG
+- **Keyboard-driven** — Full set of standard shortcuts
+- **Lightweight** — ~5MB installed via Tauri 2
+
+</td>
+</tr>
+</table>
+
+---
+
+## ⌨️ Keyboard Shortcuts
+
+| Shortcut | Action |
+|:---|:---|
+| `Ctrl+N` | New File |
+| `Ctrl+O` | Open File |
+| `Ctrl+S` | Save |
+| `Ctrl+Shift+S` | Save As |
+| `Ctrl+W` | Close Tab |
+| `Ctrl+F` | Find |
+| `Ctrl+H` | Find & Replace |
+| `Ctrl+Shift+C` | Compare Files |
+| `Ctrl+Shift+P` | Take Screenshot |
+| `Ctrl++` | Zoom In |
+| `Ctrl+-` | Zoom Out |
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+| Tool | Required | Install |
+|:---|:---|:---|
+| **Node.js** | v18+ | [nodejs.org](https://nodejs.org) |
+| **Rust** | latest | [rustup.rs](https://rustup.rs) |
+| **VS Build Tools** | Windows only | See below |
+
+<details>
+<summary><b>Install Visual Studio Build Tools (Windows)</b></summary>
+
+```powershell
+# Run as Administrator:
+winget install Microsoft.VisualStudio.2022.BuildTools --override "--wait --passive --add Microsoft.VisualStudio.Workload.VCTools --includeRecommended"
+```
+
+</details>
+
+### Development
 
 ```bash
 # Install dependencies
@@ -62,54 +137,67 @@ npm install
 
 # Start development (hot-reload frontend + Rust backend)
 npm run tauri dev
+```
 
-# Build for production
+### Production Build
+
+```bash
 npm run tauri build
 ```
 
-The production build outputs to `src-tauri/target/release/` (executable) and `src-tauri/target/release/bundle/` (installer).
+Output:
+- **Executable** → `src-tauri/target/release/vyasa-notetaking-app.exe`
+- **MSI Installer** → `src-tauri/target/release/bundle/msi/`
+- **NSIS Installer** → `src-tauri/target/release/bundle/nsis/`
 
-## Project Structure
+---
+
+## 📁 Project Structure
 
 ```
 vyasa-notetaking-app/
-├── index.html              # Entry HTML
-├── package.json            # npm config & dependencies
-├── tsconfig.json           # TypeScript config
-├── vite.config.ts          # Vite bundler config
 ├── public/
-│   └── logo.png            # Vyasa brand logo
-├── src/                    # React frontend
-│   ├── main.tsx            # React entry point
-│   ├── App.tsx             # Main app component (tabs, state, shortcuts)
-│   ├── styles.css          # All styles (dark/light themes, glass effects)
+│   └── logo.png                # Vyasa brand logo
+├── src/                        # React frontend
+│   ├── main.tsx                # Entry point
+│   ├── App.tsx                 # Main app (tabs, state, shortcuts)
+│   ├── styles.css              # Themes & glass effects
 │   ├── utils/
-│   │   └── diff.ts         # LCS-based line diff algorithm
+│   │   └── diff.ts             # LCS-based line diff algorithm
 │   └── components/
-│       ├── MenuBar.tsx     # File/Edit/View/Help menus + About dialog
-│       ├── TabBar.tsx      # Multi-tab support with close buttons
-│       ├── FontBar.tsx     # System font selector + size picker + screenshot button
-│       ├── StatusBar.tsx   # Bottom status bar (line/col/counts/encoding)
-│       └── CompareView.tsx # Side-by-side diff with inline editing & screenshot
-└── src-tauri/              # Tauri/Rust backend
-    ├── Cargo.toml          # Rust dependencies
-    ├── tauri.conf.json     # Tauri configuration
-    ├── capabilities/       # Permission configuration
+│       ├── MenuBar.tsx         # File / Edit / View / Help menus
+│       ├── TabBar.tsx          # Multi-tab bar with close buttons
+│       ├── FontBar.tsx         # Font selector + screenshot button
+│       ├── StatusBar.tsx       # Line / col / word count / encoding
+│       └── CompareView.tsx     # Side-by-side diff with inline editing
+└── src-tauri/                  # Tauri / Rust backend
+    ├── Cargo.toml              # Rust dependencies
+    ├── tauri.conf.json         # Tauri configuration & file associations
     └── src/
-        ├── main.rs         # Rust entry point
-        └── lib.rs          # Commands: file I/O, fonts, screenshots, session, recent files
+        ├── main.rs             # Rust entry point
+        └── lib.rs              # Commands: file I/O, fonts, screenshots, session
 ```
 
-## Tech Stack
+---
 
-- **[Tauri 2](https://v2.tauri.app/)** — Lightweight native app framework (~5MB bundle)
-- **[React 18](https://react.dev/)** — UI component library
-- **[TypeScript](https://typescriptlang.org/)** — Type-safe JavaScript
-- **[Vite](https://vitejs.dev/)** — Fast dev server & bundler
-- **[html2canvas](https://html2canvas.hertzen.com/)** — DOM-to-image screenshot capture
-- **[font-enumeration](https://crates.io/crates/font-enumeration)** — System font discovery (Rust)
-- **[tauri-plugin-single-instance](https://crates.io/crates/tauri-plugin-single-instance)** — Single window enforcement
+## 🛠️ Tech Stack
 
-## License
+<div align="center">
+
+| Technology | Purpose |
+|:---|:---|
+| [**Tauri 2**](https://v2.tauri.app/) | Lightweight native app framework |
+| [**React 18**](https://react.dev/) | UI component library |
+| [**TypeScript**](https://typescriptlang.org/) | Type-safe JavaScript |
+| [**Vite**](https://vitejs.dev/) | Fast dev server & bundler |
+| [**html2canvas**](https://html2canvas.hertzen.com/) | DOM-to-image screenshot capture |
+| [**font-enumeration**](https://crates.io/crates/font-enumeration) | System font discovery (Rust) |
+| [**tauri-plugin-single-instance**](https://crates.io/crates/tauri-plugin-single-instance) | Single window enforcement |
+
+</div>
+
+---
+
+## 📜 License
 
 © 2026 Debanjan Bhattacharya. All rights reserved.
