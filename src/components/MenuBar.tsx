@@ -9,6 +9,8 @@ interface MenuBarProps {
   onSave: () => void;
   onSaveAs: () => void;
   onFind: () => void;
+  onUndo: () => void;
+  onRedo: () => void;
   onCompare: () => void;
   wordWrap: boolean;
   onToggleWordWrap: () => void;
@@ -38,6 +40,8 @@ function MenuBar({
   onSave,
   onSaveAs,
   onFind,
+  onUndo,
+  onRedo,
   onCompare,
   wordWrap,
   onToggleWordWrap,
@@ -80,6 +84,9 @@ function MenuBar({
       { label: "Save As...", shortcut: "Ctrl+Shift+S", action: onSaveAs },
     ],
     Edit: [
+      { label: "Undo", shortcut: "Ctrl+Z", action: onUndo },
+      { label: "Redo", shortcut: "Ctrl+Y", action: onRedo },
+      { separator: true, label: "" },
       { label: "Find", shortcut: "Ctrl+F", action: onFind },
       { label: "Find & Replace", shortcut: "Ctrl+H", action: onFind },
       { separator: true, label: "" },

@@ -11,7 +11,7 @@ Glass-effect styling. System fonts. Side-by-side diffing. Screenshot capture. Al
 
 _For Indians, by an Indian._ 🇮🇳
 
-[![Version](https://img.shields.io/badge/version-1.0.7-7c3aed?style=for-the-badge)](https://github.com/code-by-debanjan/vyasa-notetaking-app/releases)
+[![Version](https://img.shields.io/badge/version-1.0.8-7c3aed?style=for-the-badge)](https://github.com/code-by-debanjan/vyasa-notetaking-app/releases)
 [![Built with Tauri](https://img.shields.io/badge/Built_with-Tauri_2-ffc131?style=for-the-badge&logo=tauri&logoColor=white)](https://v2.tauri.app/)
 [![React](https://img.shields.io/badge/React-18-61dafb?style=for-the-badge&logo=react&logoColor=white)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6?style=for-the-badge&logo=typescript&logoColor=white)](https://typescriptlang.org/)
