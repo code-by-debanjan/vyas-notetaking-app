@@ -61,6 +61,11 @@ function App() {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const appRef = useRef<HTMLDivElement>(null);
 
+  // Undo/Redo history per tab
+  const undoHistoryRef = useRef<Map<string, { stack: string[]; index: number; lastTime: number }>>(new Map());
+  const UNDO_DEBOUNCE_MS = 400;
+  const UNDO_MAX_STACK = 500;
+
   const activeTab = tabs.find((t) => t.id === activeTabId) ?? tabs[0];
 
   // Cursor position tracking
@@ -368,12 +373,61 @@ function App() {
     []
   );
 
+  const getUndoEntry = useCallback((tabId: string, initialContent?: string) => {
+    let entry = undoHistoryRef.current.get(tabId);
+    if (!entry) {
+      entry = { stack: [initialContent ?? ""], index: 0, lastTime: 0 };
+      undoHistoryRef.current.set(tabId, entry);
+    }
+    return entry;
+  }, []);
+
   const handleContentChange = useCallback(
     (value: string) => {
       updateTab(activeTabId, { content: value, isModified: true });
+
+      const entry = getUndoEntry(activeTabId);
+      const now = Date.now();
+      // Trim any redo history beyond current index
+      entry.stack = entry.stack.slice(0, entry.index + 1);
+      if (now - entry.lastTime < UNDO_DEBOUNCE_MS) {
+        // Coalesce: replace last entry
+        entry.stack[entry.index] = value;
+      } else {
+        // New snapshot
+        entry.stack.push(value);
+        entry.index = entry.stack.length - 1;
+      }
+      // Limit stack size
+      if (entry.stack.length > UNDO_MAX_STACK) {
+        const excess = entry.stack.length - UNDO_MAX_STACK;
+        entry.stack = entry.stack.slice(excess);
+        entry.index = Math.max(0, entry.index - excess);
+      }
+      entry.lastTime = now;
     },
-    [activeTabId, updateTab]
+    [activeTabId, updateTab, getUndoEntry]
   );
+
+  const handleUndo = useCallback(() => {
+    const entry = getUndoEntry(activeTabId, activeTab.content);
+    if (entry.index > 0) {
+      entry.index--;
+      const value = entry.stack[entry.index];
+      updateTab(activeTabId, { content: value, isModified: true });
+      entry.lastTime = 0; // Reset debounce so next edit creates new snapshot
+    }
+  }, [activeTabId, activeTab.content, updateTab, getUndoEntry]);
+
+  const handleRedo = useCallback(() => {
+    const entry = getUndoEntry(activeTabId, activeTab.content);
+    if (entry.index < entry.stack.length - 1) {
+      entry.index++;
+      const value = entry.stack[entry.index];
+      updateTab(activeTabId, { content: value, isModified: true });
+      entry.lastTime = 0;
+    }
+  }, [activeTabId, activeTab.content, updateTab, getUndoEntry]);
 
   // === File Operations ===
 
@@ -699,13 +753,23 @@ function App() {
               handleCompare();
             }
             break;
+          case "z":
+            if (!e.shiftKey) {
+              e.preventDefault();
+              handleUndo();
+            }
+            break;
+          case "y":
+            e.preventDefault();
+            handleRedo();
+            break;
         }
       }
     };
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [handleNew, handleOpen, handleSave, handleSaveAs, handleCloseTab, activeTabId, handleFind, handleScreenshot, handleCompare]);
+  }, [handleNew, handleOpen, handleSave, handleSaveAs, handleCloseTab, activeTabId, handleFind, handleScreenshot, handleCompare, handleUndo, handleRedo]);
 
   const charCount = activeTab.content.length;
   const wordCount = activeTab.content.trim()
@@ -747,6 +811,8 @@ function App() {
         onSave={handleSave}
         onSaveAs={handleSaveAs}
         onFind={handleFind}
+        onUndo={handleUndo}
+        onRedo={handleRedo}
         wordWrap={wordWrap}
         onToggleWordWrap={() => setWordWrap((w) => !w)}
         fontSize={fontSize}
