@@ -1,6 +1,6 @@
 [package]
 name = "vyasa-notetaking-app"
-version = "1.0.3"
+version = "1.0.4"
 description = "Vyasa: Compile your Epic"
 authors = ["you"]
 edition = "2021"

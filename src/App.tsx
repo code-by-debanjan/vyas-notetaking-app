@@ -97,49 +97,49 @@ function App() {
   }, []);
 
   // Restore session from previous app launch
+  // Restore session and open CLI file arg in a single coordinated flow
+  // to prevent the race condition where session restore overwrites CLI-opened file
   const sessionRestoredRef = useRef(false);
   useEffect(() => {
     if (sessionRestoredRef.current) return;
     sessionRestoredRef.current = true;
-    invoke<[Array<{ title: string; content: string; file_path: string | null }>, number] | null>("load_session")
-      .then(async (result) => {
-        if (!result) return;
-        const [savedTabs, activeIndex] = result;
-        if (!savedTabs || savedTabs.length === 0) return;
 
-        const restoredTabs: TabData[] = [];
-        for (const st of savedTabs) {
-          const tab = createNewTab();
-          tab.title = st.title;
-          tab.filePath = st.file_path;
-          // If it had a file path, try to reload content from disk (it may have changed)
-          if (st.file_path) {
-            try {
-              tab.content = await invoke<string>("read_file", { path: st.file_path });
-            } catch {
-              tab.content = st.content; // fallback to saved content
+    (async () => {
+      // Step 1: Restore session
+      let restoredTabs: TabData[] = [];
+      let restoredActiveIndex = 0;
+      try {
+        const result = await invoke<[Array<{ title: string; content: string; file_path: string | null }>, number] | null>("load_session");
+        if (result) {
+          const [savedTabs, activeIndex] = result;
+          if (savedTabs && savedTabs.length > 0) {
+            for (const st of savedTabs) {
+              const tab = createNewTab();
+              tab.title = st.title;
+              tab.filePath = st.file_path;
+              if (st.file_path) {
+                try {
+                  tab.content = await invoke<string>("read_file", { path: st.file_path });
+                } catch {
+                  tab.content = st.content;
+                }
+              } else {
+                tab.content = st.content;
+              }
+              tab.isModified = false;
+              restoredTabs.push(tab);
             }
-          } else {
-            tab.content = st.content;
+            restoredActiveIndex = Math.min(activeIndex, restoredTabs.length - 1);
           }
-          tab.isModified = false;
-          restoredTabs.push(tab);
         }
+      } catch (err) {
+        console.error("Failed to restore session:", err);
+      }
 
-        if (restoredTabs.length > 0) {
-          setTabs(restoredTabs);
-          const idx = Math.min(activeIndex, restoredTabs.length - 1);
-          setActiveTabId(restoredTabs[idx].id);
-        }
-      })
-      .catch(console.error);
-  }, []);
-
-  // Open file passed via CLI args (e.g., right-click "Open with" in Windows Explorer)
-  useEffect(() => {
-    invoke<string | null>("get_cli_file_arg").then(async (filePath) => {
-      if (filePath) {
-        try {
+      // Step 2: Check for CLI file arg (e.g., right-click "Open with" in Windows Explorer)
+      try {
+        const filePath = await invoke<string | null>("get_cli_file_arg");
+        if (filePath) {
           const content: string = await invoke("read_file", { path: filePath });
           const fileName = filePath.split("\\").pop()?.split("/").pop() ?? "Untitled";
           const newTab = createNewTab();
@@ -147,21 +147,37 @@ function App() {
           newTab.content = content;
           newTab.filePath = filePath;
           newTab.isModified = false;
-          setTabs((prev) => {
-            // Replace the default empty tab if it's the only one and untouched
-            if (prev.length === 1 && !prev[0].isModified && !prev[0].filePath && prev[0].content === "") {
-              setActiveTabId(newTab.id);
-              return [newTab];
+
+          // Don't duplicate if the file is already in restored tabs
+          const existing = restoredTabs.find((t) => t.filePath?.toLowerCase() === filePath.toLowerCase());
+          if (existing) {
+            // File already in session — just activate it
+            if (restoredTabs.length > 0) {
+              setTabs(restoredTabs);
+              setActiveTabId(existing.id);
             }
-            return [...prev, newTab];
-          });
-          setActiveTabId(newTab.id);
+          } else if (restoredTabs.length > 0) {
+            // Append file tab to restored session
+            setTabs([...restoredTabs, newTab]);
+            setActiveTabId(newTab.id);
+          } else {
+            // No session — just open the file
+            setTabs([newTab]);
+            setActiveTabId(newTab.id);
+          }
           addToRecentFiles(filePath);
-        } catch (err) {
-          console.error("Failed to open file from CLI arg:", err);
+          return;
         }
+      } catch (err) {
+        console.error("Failed to open file from CLI arg:", err);
       }
-    }).catch(console.error);
+
+      // Step 3: No CLI file — apply restored session if any
+      if (restoredTabs.length > 0) {
+        setTabs(restoredTabs);
+        setActiveTabId(restoredTabs[restoredActiveIndex].id);
+      }
+    })();
   }, [addToRecentFiles]);
 
   // Listen for files opened from second instances (single-instance plugin)
