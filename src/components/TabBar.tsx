@@ -1,6 +1,7 @@
 // © 2026 Debanjan Bhattacharya. All rights reserved.
 
 import { useState, useEffect, useRef, useCallback } from "react";
+import { createPortal } from "react-dom";
 import { invoke } from "@tauri-apps/api/core";
 import type { TabData } from "../App";
 
@@ -52,7 +53,7 @@ function TabBar({ tabs, activeTabId, onSelectTab, onCloseTab, onNewTab }: TabBar
     setContextMenu(null);
   }, [contextMenu]);
 
-  return (
+  const tabBarContent = (
     <div
       className="tab-bar"
       onDoubleClick={(e) => {
@@ -84,9 +85,14 @@ function TabBar({ tabs, activeTabId, onSelectTab, onCloseTab, onNewTab }: TabBar
           </button>
         </div>
       ))}
+    </div>
+  );
 
-      {/* Right-click context menu */}
-      {contextMenu && (
+  // Render context menu via portal so it's not clipped by tab-bar overflow
+  return (
+    <>
+      {tabBarContent}
+      {contextMenu && createPortal(
         <div
           ref={menuRef}
           className="tab-context-menu"
@@ -106,9 +112,10 @@ function TabBar({ tabs, activeTabId, onSelectTab, onCloseTab, onNewTab }: TabBar
               Open in File Explorer
             </button>
           )}
-        </div>
+        </div>,
+        document.body
       )}
-    </div>
+    </>
   );
 }
 
