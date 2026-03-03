@@ -381,14 +381,12 @@ html, body, #root {
 .tab-context-menu {
   position: fixed;
   z-index: 1000;
-  background: var(--glass-bg);
-  backdrop-filter: blur(var(--glass-blur));
-  -webkit-backdrop-filter: blur(var(--glass-blur));
+  background: var(--bg-primary);
   border: 1px solid var(--glass-border);
   border-radius: 8px;
   padding: 4px 0;
   min-width: 180px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
 }
 
 .tab-context-item {
