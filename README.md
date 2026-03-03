@@ -25,17 +25,11 @@ _For Indians, by an Indian._ 🇮🇳
 
 <div align="center">
 
-| Dark Theme | Light Theme |
-|:---:|:---:|
-| ![Dark Theme](screenshots/Dark-Theme.png) | ![Light Theme](screenshots/Light-Theme.png) |
+<img src="screenshots/Dark-Theme.png" alt="Dark Theme" width="48%" /> &nbsp; <img src="screenshots/Light-Theme.png" alt="Light Theme" width="48%" />
 
-| Compare Files | Screenshot |
-|:---:|:---:|
-| ![Compare Files](screenshots/Compare-Files.png) | ![Screenshot](screenshots/Screenshot.png) |
+<img src="screenshots/Compare-Files.png" alt="Compare Files" width="48%" /> &nbsp; <img src="screenshots/Screenshot.png" alt="Screenshot" width="48%" />
 
-| Font Selector |
-|:---:|
-| ![Font Selector](screenshots/Font-Selector.png) |
+<img src="screenshots/Font-Selector.png" alt="Font Selector" width="48%" />
 
 </div>
 
