@@ -68,6 +68,8 @@ _For Indians, by an Indian._ 🇮🇳
 ### 📝 Editor
 
 - **Multi-tab editing** — Work on multiple files simultaneously
+- **Double-click new tab** — Double-click the tab bar to create a new file
+- **Tab context menu** — Right-click a tab to Close or Open in File Explorer
 - **Find & Replace** — Full-text search with replace support
 - **Line numbers** — Clean gutter display
 - **Word wrap** — Toggle from the View menu
@@ -191,7 +193,7 @@ vyasa-notetaking-app/
 │   │   └── diff.ts             # LCS-based line diff algorithm
 │   └── components/
 │       ├── MenuBar.tsx         # File / Edit / View / Help menus
-│       ├── TabBar.tsx          # Multi-tab bar with close buttons
+│       ├── TabBar.tsx          # Multi-tab bar with context menu
 │       ├── FontBar.tsx         # Font selector + screenshot button
 │       ├── StatusBar.tsx       # Line / col / word count / encoding
 │       └── CompareView.tsx     # Side-by-side diff with inline editing
