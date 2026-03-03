@@ -18,6 +18,8 @@ export interface TabData {
   content: string;
   filePath: string | null;
   isModified: boolean;
+  fontSize: number;
+  fontFamily: string;
 }
 
 let tabCounter = 1;
@@ -30,6 +32,8 @@ function createNewTab(): TabData {
     content: "",
     filePath: null,
     isModified: false,
+    fontSize: 14,
+    fontFamily: "Cascadia Code",
   };
 }
 
@@ -37,8 +41,6 @@ function App() {
   const [tabs, setTabs] = useState<TabData[]>([createNewTab()]);
   const [activeTabId, setActiveTabId] = useState(tabs[0].id);
   const [wordWrap, setWordWrap] = useState(true);
-  const [fontSize, setFontSize] = useState(14);
-  const [fontFamily, setFontFamily] = useState("Cascadia Code");
   const [theme, setThemeState] = useState<"light" | "dark">(() => {
     const saved = localStorage.getItem("vyasa-theme");
     return saved === "light" || saved === "dark" ? saved : "dark";
@@ -735,11 +737,11 @@ function App() {
           case "=":
           case "+":
             e.preventDefault();
-            setFontSize((s) => Math.min(s + 2, 48));
+            updateTab(activeTabId, { fontSize: Math.min(activeTab.fontSize + 2, 48) });
             break;
           case "-":
             e.preventDefault();
-            setFontSize((s) => Math.max(s - 2, 8));
+            updateTab(activeTabId, { fontSize: Math.max(activeTab.fontSize - 2, 8) });
             break;
           case "p":
             if (e.shiftKey) {
@@ -769,7 +771,7 @@ function App() {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [handleNew, handleOpen, handleSave, handleSaveAs, handleCloseTab, activeTabId, handleFind, handleScreenshot, handleCompare, handleUndo, handleRedo]);
+  }, [handleNew, handleOpen, handleSave, handleSaveAs, handleCloseTab, activeTabId, activeTab.fontSize, updateTab, handleFind, handleScreenshot, handleCompare, handleUndo, handleRedo]);
 
   const charCount = activeTab.content.length;
   const wordCount = activeTab.content.trim()
@@ -815,8 +817,8 @@ function App() {
         onRedo={handleRedo}
         wordWrap={wordWrap}
         onToggleWordWrap={() => setWordWrap((w) => !w)}
-        fontSize={fontSize}
-        onFontSizeChange={setFontSize}
+        fontSize={activeTab.fontSize}
+        onFontSizeChange={(size: number) => updateTab(activeTabId, { fontSize: size })}
         theme={theme}
         onThemeChange={setTheme}
         onScreenshot={handleScreenshot}
@@ -827,10 +829,10 @@ function App() {
         onOpenRecent={handleOpenRecent}
       />
       <FontBar
-        fontFamily={fontFamily}
-        onFontFamilyChange={setFontFamily}
-        fontSize={fontSize}
-        onFontSizeChange={setFontSize}
+        fontFamily={activeTab.fontFamily}
+        onFontFamilyChange={(f: string) => updateTab(activeTabId, { fontFamily: f })}
+        fontSize={activeTab.fontSize}
+        onFontSizeChange={(size: number) => updateTab(activeTabId, { fontSize: size })}
         onScreenshot={handleScreenshot}
       />
       <TabBar
@@ -894,8 +896,8 @@ function App() {
           onClick={updateCursorPosition}
           spellCheck={false}
           style={{
-            fontSize: `${fontSize}px`,
-            fontFamily: `"${fontFamily}", "Consolas", "Courier New", monospace`,
+            fontSize: `${activeTab.fontSize}px`,
+            fontFamily: `"${activeTab.fontFamily}", "Consolas", "Courier New", monospace`,
             whiteSpace: wordWrap ? "pre-wrap" : "pre",
             overflowWrap: wordWrap ? "break-word" : "normal",
           }}

@@ -241,7 +241,7 @@ function MenuBar({
             <span className="about-title">VYASA</span>
             <span className="about-subtitle">: Compile Your Epic</span>
           </div>
-          <div className="about-version">Version 1.0.3</div>
+          <div className="about-version">Version 1.1.0</div>
           <div className="about-tagline">✦ For Indians, By an Indian ✦</div>
           <div className="about-copyright">© 2026 Debanjan Bhattacharya. All rights reserved.</div>
           <button className="about-close" onClick={() => setShowAbout(false)}>OK</button>
