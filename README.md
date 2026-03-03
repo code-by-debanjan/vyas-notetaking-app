@@ -21,6 +21,26 @@ _For Indians, by an Indian._ 🇮🇳
 
 ---
 
+## 🖼️ Screenshots
+
+<div align="center">
+
+| Dark Theme | Light Theme |
+|:---:|:---:|
+| ![Dark Theme](screenshots/Dark-Theme.png) | ![Light Theme](screenshots/Light-Theme.png) |
+
+| Compare Files | Screenshot |
+|:---:|:---:|
+| ![Compare Files](screenshots/Compare-Files.png) | ![Screenshot](screenshots/Screenshot.png) |
+
+| Font Selector |
+|:---:|
+| ![Font Selector](screenshots/Font-Selector.png) |
+
+</div>
+
+---
+
 ## ✨ Features
 
 <table>
