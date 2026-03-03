@@ -87,6 +87,11 @@
         "ext": ["ts"],
         "mimeType": "text/typescript",
         "description": "TypeScript File"
+      },
+      {
+        "ext": ["config", "cfg", "ini", "toml", "yaml", "yml"],
+        "mimeType": "text/plain",
+        "description": "Config File"
       }
     ]
   }
