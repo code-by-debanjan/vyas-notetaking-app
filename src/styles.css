@@ -377,6 +377,37 @@ html, body, #root {
   color: var(--text-primary);
 }
 
+/* === Tab Context Menu === */
+.tab-context-menu {
+  position: fixed;
+  z-index: 1000;
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  border-radius: 8px;
+  padding: 4px 0;
+  min-width: 180px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.tab-context-item {
+  display: block;
+  width: 100%;
+  padding: 6px 14px;
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  font-size: 13px;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.12s;
+}
+
+.tab-context-item:hover {
+  background: var(--bg-hover);
+}
+
 /* === Font Bar === */
 .font-bar {
   display: flex;

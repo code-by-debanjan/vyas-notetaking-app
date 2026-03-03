@@ -772,6 +772,7 @@ function App() {
         activeTabId={activeTabId}
         onSelectTab={setActiveTabId}
         onCloseTab={handleCloseTab}
+        onNewTab={handleNew}
       />
       {findOpen && (
         <div className="find-bar">

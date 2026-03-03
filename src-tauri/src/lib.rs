@@ -99,6 +99,24 @@ fn get_system_fonts() -> Result<Vec<String>, String> {
 }
 
 #[tauri::command]
+fn show_in_explorer(path: String) -> Result<(), String> {
+    let file_path = std::path::Path::new(&path);
+    let folder = if file_path.is_file() {
+        file_path.parent().unwrap_or(file_path)
+    } else {
+        file_path
+    };
+    #[cfg(target_os = "windows")]
+    {
+        std::process::Command::new("explorer")
+            .arg(folder)
+            .spawn()
+            .map_err(|e| format!("Failed to open explorer: {}", e))?;
+    }
+    Ok(())
+}
+
+#[tauri::command]
 fn read_file(path: String) -> Result<String, String> {
     fs::read_to_string(&path).map_err(|e| format!("Failed to read file '{}': {}", path, e))
 }
@@ -177,7 +195,7 @@ pub fn run() {
                 }
             }
         }))
-        .invoke_handler(tauri::generate_handler![read_file, write_file, get_system_fonts, get_pictures_dir, save_screenshot, get_cli_file_arg, save_session, load_session, save_recent_files, load_recent_files])
+        .invoke_handler(tauri::generate_handler![read_file, write_file, get_system_fonts, get_pictures_dir, save_screenshot, get_cli_file_arg, save_session, load_session, save_recent_files, load_recent_files, show_in_explorer])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
