@@ -417,6 +417,8 @@ html, body, #root {
   -webkit-backdrop-filter: blur(var(--glass-blur));
   border-bottom: 1px solid var(--glass-border);
   height: 34px;
+  position: relative;
+  z-index: 50;
 }
 
 .font-selector,
