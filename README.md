@@ -21,24 +21,6 @@ _For Indians, by an Indian._ 🇮🇳
 
 ---
 
-## 🖼️ Screenshots
-
-> **Add your screenshots to the `screenshots/` folder** and they'll show up here automatically.
-
-<div align="center">
-
-| Dark Theme | Light Theme |
-|:---:|:---:|
-| ![Dark Theme](screenshots/dark-theme.png) | ![Light Theme](screenshots/light-theme.png) |
-
-| Compare View | Font Selector |
-|:---:|:---:|
-| ![Compare View](screenshots/compare-view.png) | ![Font Selector](screenshots/font-selector.png) |
-
-</div>
-
----
-
 ## ✨ Features
 
 <table>
@@ -46,6 +28,7 @@ _For Indians, by an Indian._ 🇮🇳
 <td width="50%">
 
 ### 📝 Editor
+
 - **Multi-tab editing** — Work on multiple files simultaneously
 - **Find & Replace** — Full-text search with replace support
 - **Line numbers** — Clean gutter display
@@ -57,6 +40,7 @@ _For Indians, by an Indian._ 🇮🇳
 <td width="50%">
 
 ### 📂 File Management
+
 - **Full file ops** — New, Open, Save, Save As with native OS dialogs
 - **Any file type** — Save as `.txt`, `.config`, `.json`, `.yaml`, or any extension
 - **Recent files** — Quick access from the File menu
@@ -70,6 +54,7 @@ _For Indians, by an Indian._ 🇮🇳
 <td width="50%">
 
 ### 🎨 Interface
+
 - **Glass UI** — Backdrop-filter blur with purple accent theming
 - **Dark/Light themes** — Persists across restarts
 - **Custom title bar** — Branded with Vyasa logo
@@ -80,6 +65,7 @@ _For Indians, by an Indian._ 🇮🇳
 <td width="50%">
 
 ### 🔧 Power Tools
+
 - **Compare Files** — Side-by-side diff with inline editing
 - **Screenshot capture** — Save editor/compare view as PNG
 - **Keyboard-driven** — Full set of standard shortcuts
@@ -93,19 +79,19 @@ _For Indians, by an Indian._ 🇮🇳
 
 ## ⌨️ Keyboard Shortcuts
 
-| Shortcut | Action |
-|:---|:---|
-| `Ctrl+N` | New File |
-| `Ctrl+O` | Open File |
-| `Ctrl+S` | Save |
-| `Ctrl+Shift+S` | Save As |
-| `Ctrl+W` | Close Tab |
-| `Ctrl+F` | Find |
-| `Ctrl+H` | Find & Replace |
-| `Ctrl+Shift+C` | Compare Files |
+| Shortcut       | Action          |
+| :------------- | :-------------- |
+| `Ctrl+N`       | New File        |
+| `Ctrl+O`       | Open File       |
+| `Ctrl+S`       | Save            |
+| `Ctrl+Shift+S` | Save As         |
+| `Ctrl+W`       | Close Tab       |
+| `Ctrl+F`       | Find            |
+| `Ctrl+H`       | Find & Replace  |
+| `Ctrl+Shift+C` | Compare Files   |
 | `Ctrl+Shift+P` | Take Screenshot |
-| `Ctrl++` | Zoom In |
-| `Ctrl+-` | Zoom Out |
+| `Ctrl++`       | Zoom In         |
+| `Ctrl+-`       | Zoom Out        |
 
 ---
 
@@ -113,11 +99,11 @@ _For Indians, by an Indian._ 🇮🇳
 
 ### Prerequisites
 
-| Tool | Required | Install |
-|:---|:---|:---|
-| **Node.js** | v18+ | [nodejs.org](https://nodejs.org) |
-| **Rust** | latest | [rustup.rs](https://rustup.rs) |
-| **VS Build Tools** | Windows only | See below |
+| Tool               | Required     | Install                          |
+| :----------------- | :----------- | :------------------------------- |
+| **Node.js**        | v18+         | [nodejs.org](https://nodejs.org) |
+| **Rust**           | latest       | [rustup.rs](https://rustup.rs)   |
+| **VS Build Tools** | Windows only | See below                        |
 
 <details>
 <summary><b>Install Visual Studio Build Tools (Windows)</b></summary>
@@ -146,6 +132,7 @@ npm run tauri build
 ```
 
 Output:
+
 - **Executable** → `src-tauri/target/release/vyasa-notetaking-app.exe`
 - **MSI Installer** → `src-tauri/target/release/bundle/msi/`
 - **NSIS Installer** → `src-tauri/target/release/bundle/nsis/`
@@ -184,15 +171,15 @@ vyasa-notetaking-app/
 
 <div align="center">
 
-| Technology | Purpose |
-|:---|:---|
-| [**Tauri 2**](https://v2.tauri.app/) | Lightweight native app framework |
-| [**React 18**](https://react.dev/) | UI component library |
-| [**TypeScript**](https://typescriptlang.org/) | Type-safe JavaScript |
-| [**Vite**](https://vitejs.dev/) | Fast dev server & bundler |
-| [**html2canvas**](https://html2canvas.hertzen.com/) | DOM-to-image screenshot capture |
-| [**font-enumeration**](https://crates.io/crates/font-enumeration) | System font discovery (Rust) |
-| [**tauri-plugin-single-instance**](https://crates.io/crates/tauri-plugin-single-instance) | Single window enforcement |
+| Technology                                                                                | Purpose                          |
+| :---------------------------------------------------------------------------------------- | :------------------------------- |
+| [**Tauri 2**](https://v2.tauri.app/)                                                      | Lightweight native app framework |
+| [**React 18**](https://react.dev/)                                                        | UI component library             |
+| [**TypeScript**](https://typescriptlang.org/)                                             | Type-safe JavaScript             |
+| [**Vite**](https://vitejs.dev/)                                                           | Fast dev server & bundler        |
+| [**html2canvas**](https://html2canvas.hertzen.com/)                                       | DOM-to-image screenshot capture  |
+| [**font-enumeration**](https://crates.io/crates/font-enumeration)                         | System font discovery (Rust)     |
+| [**tauri-plugin-single-instance**](https://crates.io/crates/tauri-plugin-single-instance) | Single window enforcement        |
 
 </div>
 
