@@ -451,10 +451,24 @@ function App() {
 
   const handleSaveAs = useCallback(async () => {
     try {
+      // Determine a default file name from the current tab title
+      const defaultName = activeTab.title !== "Untitled" ? activeTab.title : undefined;
+
       const filePath = await save({
+        defaultPath: defaultName,
         filters: [
-          { name: "Text Files", extensions: ["txt"] },
           { name: "All Files", extensions: ["*"] },
+          { name: "Text Files", extensions: ["txt"] },
+          { name: "Markdown Files", extensions: ["md"] },
+          { name: "JSON Files", extensions: ["json"] },
+          { name: "Config Files", extensions: ["config", "cfg", "ini", "toml", "yaml", "yml"] },
+          { name: "Log Files", extensions: ["log"] },
+          { name: "CSV Files", extensions: ["csv"] },
+          { name: "XML Files", extensions: ["xml"] },
+          { name: "HTML Files", extensions: ["html", "htm"] },
+          { name: "CSS Files", extensions: ["css"] },
+          { name: "JavaScript Files", extensions: ["js"] },
+          { name: "TypeScript Files", extensions: ["ts"] },
         ],
       });
 
@@ -469,11 +483,12 @@ function App() {
           title: fileName,
           isModified: false,
         });
+        addToRecentFiles(filePath);
       }
     } catch (err) {
       console.error("Failed to save file:", err);
     }
-  }, [activeTab, activeTabId, updateTab]);
+  }, [activeTab, activeTabId, updateTab, addToRecentFiles]);
 
   const doCloseTab = useCallback(
     (tabId: string) => {
