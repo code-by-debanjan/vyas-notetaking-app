@@ -11,7 +11,7 @@ Glass-effect styling. System fonts. Side-by-side diffing. Screenshot capture. Al
 
 _For Indians, by an Indian._ 🇮🇳
 
-[![Version](https://img.shields.io/badge/version-1.0.9-7c3aed?style=for-the-badge)](https://github.com/code-by-debanjan/vyasa-notetaking-app/releases)
+[![Version](https://img.shields.io/badge/version-1.1.0-7c3aed?style=for-the-badge)](https://github.com/code-by-debanjan/vyasa-notetaking-app/releases)
 [![Built with Tauri](https://img.shields.io/badge/Built_with-Tauri_2-ffc131?style=for-the-badge&logo=tauri&logoColor=white)](https://v2.tauri.app/)
 [![React](https://img.shields.io/badge/React-18-61dafb?style=for-the-badge&logo=react&logoColor=white)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6?style=for-the-badge&logo=typescript&logoColor=white)](https://typescriptlang.org/)
@@ -73,11 +73,14 @@ _For Indians, by an Indian._ 🇮🇳
 - **Multi-tab editing** — Work on multiple files simultaneously
 - **Double-click new tab** — Double-click the tab bar to create a new file
 - **Tab context menu** — Right-click a tab to Close or Open in File Explorer
+- **Undo / Redo** — Full undo/redo history per tab
+- **Per-tab font settings** — Each tab has its own font family and size
 - **Find & Replace** — Full-text search with replace support
 - **Line numbers** — Clean gutter display
 - **Word wrap** — Toggle from the View menu
-- **Zoom** — Ctrl+/Ctrl- to adjust font size
+- **Zoom** — Ctrl+/Ctrl- to adjust font size per tab
 - **System font selector** — Searchable dropdown with all installed fonts
+- **Indian language support** — Write in Hindi, Bengali, and other Indic scripts
 
 </td>
 <td width="50%">
@@ -124,6 +127,8 @@ _For Indians, by an Indian._ 🇮🇳
 
 | Shortcut       | Action          |
 | :------------- | :-------------- |
+| `Ctrl+Z`       | Undo            |
+| `Ctrl+Y`       | Redo            |
 | `Ctrl+N`       | New File        |
 | `Ctrl+O`       | Open File       |
 | `Ctrl+S`       | Save            |
