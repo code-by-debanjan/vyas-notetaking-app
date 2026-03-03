@@ -25,11 +25,35 @@ _For Indians, by an Indian._ 🇮🇳
 
 <div align="center">
 
-<img src="screenshots/Dark-Theme.png" alt="Dark Theme" width="48%" /> &nbsp; <img src="screenshots/Light-Theme.png" alt="Light Theme" width="48%" />
-
-<img src="screenshots/Compare-Files.png" alt="Compare Files" width="48%" /> &nbsp; <img src="screenshots/Screenshot.png" alt="Screenshot" width="48%" />
-
-<img src="screenshots/Font-Selector.png" alt="Font Selector" width="48%" />
+<table>
+<tr>
+<td align="center" width="48%">
+<img src="screenshots/Dark-Theme.png" alt="Dark Theme" width="100%" /><br/>
+<em>Dark Theme</em>
+</td>
+<td align="center" width="48%">
+<img src="screenshots/Light-Theme.png" alt="Light Theme" width="100%" /><br/>
+<em>Light Theme</em>
+</td>
+</tr>
+<tr>
+<td align="center" width="48%">
+<img src="screenshots/Compare-Files.png" alt="Compare Files" width="100%" /><br/>
+<em>Compare Files</em>
+</td>
+<td align="center" width="48%">
+<img src="screenshots/Screenshot.png" alt="Take Screenshot" width="100%" /><br/>
+<em>Take Screenshot</em>
+</td>
+</tr>
+<tr>
+<td align="center" width="48%">
+<img src="screenshots/Font-Selector.png" alt="Font Selector" width="100%" /><br/>
+<em>Font Selector</em>
+</td>
+<td></td>
+</tr>
+</table>
 
 </div>
 
