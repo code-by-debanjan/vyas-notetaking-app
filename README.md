@@ -11,11 +11,11 @@ Glass-effect styling. System fonts. Side-by-side diffing. Screenshot capture. Al
 
 _For Indians, by an Indian._ 🇮🇳
 
-[![Version](https://img.shields.io/badge/version-1.1.0-7c3aed?style=for-the-badge)](https://github.com/code-by-debanjan/vyasa-notetaking-app/releases)
+[![Version](https://img.shields.io/badge/version-1.2.0-7c3aed?style=for-the-badge)](https://github.com/code-by-debanjan/vyasa-notetaking-app/releases)
 [![Built with Tauri](https://img.shields.io/badge/Built_with-Tauri_2-ffc131?style=for-the-badge&logo=tauri&logoColor=white)](https://v2.tauri.app/)
 [![React](https://img.shields.io/badge/React-18-61dafb?style=for-the-badge&logo=react&logoColor=white)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6?style=for-the-badge&logo=typescript&logoColor=white)](https://typescriptlang.org/)
-[![License](https://img.shields.io/badge/license-All_Rights_Reserved-gray?style=for-the-badge)](#license)
+[![License](https://img.shields.io/badge/license-MIT-gray?style=for-the-badge)](#license)
 
 </div>
 
@@ -88,6 +88,7 @@ _For Indians, by an Indian._ 🇮🇳
 ### 📂 File Management
 
 - **Full file ops** — New, Open, Save, Save As with native OS dialogs
+- **Export formats** — Save as CSV, JSON, XML, and PDF with automatic format conversion
 - **Any file type** — Save as `.txt`, `.config`, `.json`, `.yaml`, or any extension
 - **Recent files** — Quick access from the File menu
 - **File associations** — Open files directly from Windows Explorer
@@ -198,7 +199,8 @@ vyasa-notetaking-app/
 │   ├── App.tsx                 # Main app (tabs, state, shortcuts)
 │   ├── styles.css              # Themes & glass effects
 │   ├── utils/
-│   │   └── diff.ts             # LCS-based line diff algorithm
+│   │   ├── diff.ts             # LCS-based line diff algorithm
+│   │   └── formatConverter.ts  # CSV, JSON, XML, PDF export converters
 │   └── components/
 │       ├── MenuBar.tsx         # File / Edit / View / Help menus
 │       ├── TabBar.tsx          # Multi-tab bar with context menu
@@ -226,6 +228,7 @@ vyasa-notetaking-app/
 | [**TypeScript**](https://typescriptlang.org/)                                             | Type-safe JavaScript             |
 | [**Vite**](https://vitejs.dev/)                                                           | Fast dev server & bundler        |
 | [**html2canvas**](https://html2canvas.hertzen.com/)                                       | DOM-to-image screenshot capture  |
+| [**jsPDF**](https://github.com/parallax/jsPDF)                                            | PDF document generation          |
 | [**font-enumeration**](https://crates.io/crates/font-enumeration)                         | System font discovery (Rust)     |
 | [**tauri-plugin-single-instance**](https://crates.io/crates/tauri-plugin-single-instance) | Single window enforcement        |
 
@@ -235,4 +238,6 @@ vyasa-notetaking-app/
 
 ## 📜 License
 
-© 2026 Debanjan Bhattacharya. All rights reserved.
+This project is licensed under the **MIT License** — see the [LICENSE.txt](LICENSE.txt) file for details.
+
+© 2026 Debanjan Bhattacharya.

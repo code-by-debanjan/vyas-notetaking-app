@@ -1,4 +1,7 @@
-// © 2026 Debanjan Bhattacharya. All rights reserved.
+// Copyright (c) 2026 Debanjan Bhattacharya
+// Project: vyasa-notetaking-app
+// Licensed under the MIT License
+// See LICENSE.txt for details
 
 import { useState, useEffect, useRef } from "react";
 import { invoke } from "@tauri-apps/api/core";

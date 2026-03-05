@@ -1,4 +1,7 @@
-// © 2026 Debanjan Bhattacharya. All rights reserved.
+// Copyright (c) 2026 Debanjan Bhattacharya
+// Project: vyasa-notetaking-app
+// Licensed under the MIT License
+// See LICENSE.txt for details
 
 use std::fs;
 use std::path::PathBuf;
@@ -127,6 +130,16 @@ fn write_file(path: String, content: String) -> Result<(), String> {
 }
 
 #[tauri::command]
+fn write_binary_file(path: String, data: Vec<u8>) -> Result<(), String> {
+    // Ensure parent directory exists
+    if let Some(parent) = std::path::Path::new(&path).parent() {
+        fs::create_dir_all(parent)
+            .map_err(|e| format!("Failed to create directory for '{}': {}", path, e))?;
+    }
+    fs::write(&path, &data).map_err(|e| format!("Failed to write binary file '{}': {}", path, e))
+}
+
+#[tauri::command]
 fn get_pictures_dir() -> Result<String, String> {
     let pictures = dirs::picture_dir()
         .ok_or_else(|| "Could not determine Pictures directory".to_string())?;
@@ -195,7 +208,7 @@ pub fn run() {
                 }
             }
         }))
-        .invoke_handler(tauri::generate_handler![read_file, write_file, get_system_fonts, get_pictures_dir, save_screenshot, get_cli_file_arg, save_session, load_session, save_recent_files, load_recent_files, show_in_explorer])
+        .invoke_handler(tauri::generate_handler![read_file, write_file, write_binary_file, get_system_fonts, get_pictures_dir, save_screenshot, get_cli_file_arg, save_session, load_session, save_recent_files, load_recent_files, show_in_explorer])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

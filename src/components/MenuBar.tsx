@@ -1,4 +1,7 @@
-// © 2026 Debanjan Bhattacharya. All rights reserved.
+// Copyright (c) 2026 Debanjan Bhattacharya
+// Project: vyasa-notetaking-app
+// Licensed under the MIT License
+// See LICENSE.txt for details
 
 import { useState, useRef, useEffect } from "react";
 import { open as dialogOpen } from "@tauri-apps/plugin-dialog";
@@ -241,9 +244,9 @@ function MenuBar({
             <span className="about-title">VYASA</span>
             <span className="about-subtitle">: Compile Your Epic</span>
           </div>
-          <div className="about-version">Version 1.1.0</div>
+          <div className="about-version">Version 1.2.0</div>
           <div className="about-tagline">✦ For Indians, By an Indian ✦</div>
-          <div className="about-copyright">© 2026 Debanjan Bhattacharya. All rights reserved.</div>
+          <div className="about-copyright">© 2026 Debanjan Bhattacharya. Licensed under the MIT License.</div>
           <button className="about-close" onClick={() => setShowAbout(false)}>OK</button>
         </div>
       </div>
