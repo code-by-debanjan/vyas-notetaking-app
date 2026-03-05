@@ -1,5 +1,5 @@
 // Copyright (c) 2026 Debanjan Bhattacharya
-// Project: vyasa-notetaking-app
+// Project: vyas-notetaking-app
 // Licensed under the MIT License
 // See LICENSE.txt for details
 
@@ -462,7 +462,7 @@ function CompareView({
             className="about-modal dialog-modal"
             onClick={(e) => e.stopPropagation()}
           >
-            <img src="/logo.png" alt="Vyasa" className="dialog-logo" />
+            <img src="/logo.png" alt="Vyas" className="dialog-logo" />
             <div className="dialog-title">{screenshotMessage.title}</div>
             <div className="screenshot-result-path">
               {screenshotMessage.text}

@@ -1,5 +1,5 @@
 // Copyright (c) 2026 Debanjan Bhattacharya
-// Project: vyasa-notetaking-app
+// Project: vyas-notetaking-app
 // Licensed under the MIT License
 // See LICENSE.txt for details
 
@@ -25,7 +25,7 @@ struct SessionData {
 fn get_app_data_dir() -> Result<PathBuf, String> {
     let data_dir = dirs::data_local_dir()
         .ok_or_else(|| "Could not determine local data directory".to_string())?;
-    let app_dir = data_dir.join("Vyasa");
+    let app_dir = data_dir.join("Vyas");
     fs::create_dir_all(&app_dir)
         .map_err(|e| format!("Failed to create app data dir: {}", e))?;
     Ok(app_dir)
@@ -143,8 +143,8 @@ fn write_binary_file(path: String, data: Vec<u8>) -> Result<(), String> {
 fn get_pictures_dir() -> Result<String, String> {
     let pictures = dirs::picture_dir()
         .ok_or_else(|| "Could not determine Pictures directory".to_string())?;
-    let vyasa_dir = pictures.join("Vyasa");
-    Ok(vyasa_dir.to_string_lossy().to_string())
+    let vyas_dir = pictures.join("Vyas");
+    Ok(vyas_dir.to_string_lossy().to_string())
 }
 
 #[tauri::command]
@@ -158,7 +158,7 @@ fn save_screenshot(folder: String, data: Vec<u8>) -> Result<String, String> {
         .unwrap_or_default()
         .as_millis();
 
-    let filename = format!("Vyasa_Screenshot_{}.png", timestamp);
+    let filename = format!("Vyas_Screenshot_{}.png", timestamp);
     let filepath = dir.join(&filename);
 
     fs::write(&filepath, &data)
@@ -209,6 +209,14 @@ pub fn run() {
             }
         }))
         .invoke_handler(tauri::generate_handler![read_file, write_file, write_binary_file, get_system_fonts, get_pictures_dir, save_screenshot, get_cli_file_arg, save_session, load_session, save_recent_files, load_recent_files, show_in_explorer])
+        .setup(|app| {
+            let icon_bytes = include_bytes!("../icons/icon.png");
+            let icon = tauri::image::Image::from_bytes(icon_bytes)?;
+            if let Some(window) = app.get_webview_window("main") {
+                let _ = window.set_icon(icon);
+            }
+            Ok(())
+        })
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

@@ -1,8 +1,8 @@
 <div align="center">
 
-<img src="public/logo.png" alt="Vyasa Logo" width="120" />
+<img src="public/logo.png" alt="Vyas Logo" width="120" />
 
-# VYASA
+# VYAS
 
 ### Compile Your Epic
 
@@ -11,7 +11,7 @@ Glass-effect styling. System fonts. Side-by-side diffing. Screenshot capture. Al
 
 _For Indians, by an Indian._ 🇮🇳
 
-[![Version](https://img.shields.io/badge/version-1.2.0-7c3aed?style=for-the-badge)](https://github.com/code-by-debanjan/vyasa-notetaking-app/releases)
+[![Version](https://img.shields.io/badge/version-1.2.0-7c3aed?style=for-the-badge)](https://github.com/code-by-debanjan/vyas-notetaking-app/releases)
 [![Built with Tauri](https://img.shields.io/badge/Built_with-Tauri_2-ffc131?style=for-the-badge&logo=tauri&logoColor=white)](https://v2.tauri.app/)
 [![React](https://img.shields.io/badge/React-18-61dafb?style=for-the-badge&logo=react&logoColor=white)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6?style=for-the-badge&logo=typescript&logoColor=white)](https://typescriptlang.org/)
@@ -104,7 +104,7 @@ _For Indians, by an Indian._ 🇮🇳
 
 - **Glass UI** — Backdrop-filter blur with purple accent theming
 - **Dark/Light themes** — Persists across restarts
-- **Custom title bar** — Branded with Vyasa logo
+- **Custom title bar** — Branded with Vyas logo
 - **Status bar** — Line, column, word/char count, encoding
 - **Unsaved changes detection** — Custom save prompt dialog
 
@@ -182,7 +182,7 @@ npm run tauri build
 
 Output:
 
-- **Executable** → `src-tauri/target/release/vyasa-notetaking-app.exe`
+- **Executable** → `src-tauri/target/release/vyas-notetaking-app.exe`
 - **MSI Installer** → `src-tauri/target/release/bundle/msi/`
 - **NSIS Installer** → `src-tauri/target/release/bundle/nsis/`
 
@@ -191,9 +191,9 @@ Output:
 ## 📁 Project Structure
 
 ```
-vyasa-notetaking-app/
+vyas-notetaking-app/
 ├── public/
-│   └── logo.png                # Vyasa brand logo
+│   └── logo.png                # Vyas brand logo
 ├── src/                        # React frontend
 │   ├── main.tsx                # Entry point
 │   ├── App.tsx                 # Main app (tabs, state, shortcuts)

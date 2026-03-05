@@ -1,19 +1,19 @@
 [package]
-name = "vyasa-notetaking-app"
+name = "vyas-notetaking-app"
 version = "1.2.0"
-description = "Vyasa: Compile your Epic"
+description = "Vyas: Compile your Epic"
 authors = ["you"]
 edition = "2021"
 
 [lib]
-name = "vyasa_notetaking_app_lib"
+name = "vyas_notetaking_app_lib"
 crate-type = ["lib", "cdylib", "staticlib"]
 
 [build-dependencies]
 tauri-build = { version = "2", features = [] }
 
 [dependencies]
-tauri = { version = "2", features = [] }
+tauri = { version = "2", features = ["image-png"] }
 tauri-plugin-dialog = "2"
 tauri-plugin-fs = "2"
 tauri-plugin-single-instance = "2"

@@ -1,5 +1,5 @@
 // Copyright (c) 2026 Debanjan Bhattacharya
-// Project: vyasa-notetaking-app
+// Project: vyas-notetaking-app
 // Licensed under the MIT License
 // See LICENSE.txt for details
 
@@ -135,7 +135,7 @@ function MenuBar({
     ],
     Help: [
       {
-        label: "About Vyasa",
+        label: "About Vyas",
         action: () => setShowAbout(true),
       },
       {
@@ -239,14 +239,14 @@ function MenuBar({
     {showAbout && (
       <div className="about-overlay" onClick={() => setShowAbout(false)}>
         <div className="about-modal" onClick={(e) => e.stopPropagation()}>
-          <img src="/logo.png" alt="Vyasa" className="about-logo" />
+          <img src="/logo.png" alt="Vyas" className="about-logo" />
           <div className="about-header">
-            <span className="about-title">VYASA</span>
+            <span className="about-title">VYAS</span>
             <span className="about-subtitle">: Compile Your Epic</span>
           </div>
           <div className="about-version">Version 1.2.0</div>
           <div className="about-tagline">✦ For Indians, By an Indian ✦</div>
-          <div className="about-copyright">© 2026 Debanjan Bhattacharya. Licensed under the MIT License.</div>
+          <div className="about-copyright">Copyright (c) 2026 Debanjan Bhattacharya<br/>Licensed under the MIT License</div>
           <button className="about-close" onClick={() => setShowAbout(false)}>OK</button>
         </div>
       </div>
@@ -255,7 +255,7 @@ function MenuBar({
     {showShortcuts && (
       <div className="about-overlay" onClick={() => setShowShortcuts(false)}>
         <div className="about-modal dialog-modal" onClick={(e) => e.stopPropagation()}>
-          <img src="/logo.png" alt="Vyasa" className="dialog-logo" />
+          <img src="/logo.png" alt="Vyas" className="dialog-logo" />
           <div className="dialog-title">Keyboard Shortcuts</div>
           <div className="shortcuts-grid">
             <div className="shortcut-row"><kbd>Ctrl+N</kbd><span>New File</span></div>
@@ -278,7 +278,7 @@ function MenuBar({
     {showScreenshotSettings && (
       <div className="about-overlay" onClick={() => setShowScreenshotSettings(false)}>
         <div className="about-modal dialog-modal" onClick={(e) => e.stopPropagation()}>
-          <img src="/logo.png" alt="Vyasa" className="dialog-logo" />
+          <img src="/logo.png" alt="Vyas" className="dialog-logo" />
           <div className="dialog-title">Screenshot Settings</div>
           <div className="screenshot-settings">
             <label className="settings-label">Save Folder</label>

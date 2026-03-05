@@ -1,5 +1,5 @@
 // Copyright (c) 2026 Debanjan Bhattacharya
-// Project: vyasa-notetaking-app
+// Project: vyas-notetaking-app
 // Licensed under the MIT License
 // See LICENSE.txt for details
 
@@ -46,12 +46,12 @@ function App() {
   const [activeTabId, setActiveTabId] = useState(tabs[0].id);
   const [wordWrap, setWordWrap] = useState(true);
   const [theme, setThemeState] = useState<"light" | "dark">(() => {
-    const saved = localStorage.getItem("vyasa-theme");
+    const saved = localStorage.getItem("vyas-theme");
     return saved === "light" || saved === "dark" ? saved : "dark";
   });
   const setTheme = useCallback((t: "light" | "dark") => {
     setThemeState(t);
-    localStorage.setItem("vyasa-theme", t);
+    localStorage.setItem("vyas-theme", t);
   }, []);
   const [findOpen, setFindOpen] = useState(false);
   const [findText, setFindText] = useState("");
@@ -848,8 +848,8 @@ function App() {
     <div className={`app ${theme}`} ref={appRef}>
       <div className="title-bar">
         <div className="title-bar-text">
-          <img src="/logo.png" alt="Vyasa" className="title-bar-logo" />
-          <span className="title-bar-name">VYASA</span>
+          <img src="/logo.png" alt="Vyas" className="title-bar-logo" />
+          <span className="title-bar-name">VYAS</span>
           <span className="title-bar-separator"> : </span>
           <span className="title-bar-tagline">Compile Your Epic</span>
         </div>
@@ -1002,7 +1002,7 @@ function App() {
       {compareError && (
         <div className="about-overlay" onClick={() => setCompareError(null)}>
           <div className="about-modal dialog-modal" onClick={(e) => e.stopPropagation()}>
-            <img src="/logo.png" alt="Vyasa" className="dialog-logo" />
+            <img src="/logo.png" alt="Vyas" className="dialog-logo" />
             <div className="dialog-title">Cannot Compare</div>
             <div className="screenshot-result-path">{compareError}</div>
             <button className="about-close" onClick={() => setCompareError(null)}>OK</button>
@@ -1013,7 +1013,7 @@ function App() {
       {screenshotMessage && (
         <div className="about-overlay" onClick={() => setScreenshotMessage(null)}>
           <div className="about-modal dialog-modal" onClick={(e) => e.stopPropagation()}>
-            <img src="/logo.png" alt="Vyasa" className="dialog-logo" />
+            <img src="/logo.png" alt="Vyas" className="dialog-logo" />
             <div className="dialog-title">{screenshotMessage.title}</div>
             <div className="screenshot-result-path">{screenshotMessage.text}</div>
             <button className="about-close" onClick={() => setScreenshotMessage(null)}>OK</button>
@@ -1024,7 +1024,7 @@ function App() {
       {savePrompt && (
         <div className="about-overlay">
           <div className="about-modal dialog-modal" onClick={(e) => e.stopPropagation()}>
-            <img src="/logo.png" alt="Vyasa" className="dialog-logo" />
+            <img src="/logo.png" alt="Vyas" className="dialog-logo" />
             <div className="dialog-title">Unsaved Changes</div>
             <div className="screenshot-result-path">
               Do you want to save changes to "{savePrompt.tabTitle}"?
@@ -1040,7 +1040,7 @@ function App() {
       {formatWarning && (
         <div className="about-overlay">
           <div className="about-modal dialog-modal" onClick={(e) => e.stopPropagation()}>
-            <img src="/logo.png" alt="Vyasa" className="dialog-logo" />
+            <img src="/logo.png" alt="Vyas" className="dialog-logo" />
             <div className="dialog-title">Format Warning</div>
             <div className="screenshot-result-path">
               Saving in .txt will lose all formatting. Do you want to proceed?
