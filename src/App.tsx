@@ -1,4 +1,7 @@
-// © 2026 Debanjan Bhattacharya. All rights reserved.
+// Copyright (c) 2026 Debanjan Bhattacharya
+// Project: vyasa-notetaking-app
+// Licensed under the MIT License
+// See LICENSE.txt for details
 
 import { useState, useCallback, useEffect, useRef } from "react";
 import { invoke } from "@tauri-apps/api/core";
@@ -6,6 +9,7 @@ import { getCurrentWindow } from "@tauri-apps/api/window";
 import { listen } from "@tauri-apps/api/event";
 import { open, save } from "@tauri-apps/plugin-dialog";
 import html2canvas from "html2canvas";
+import { detectFormat, convertContent } from "./utils/formatConverter";
 import MenuBar from "./components/MenuBar";
 import StatusBar from "./components/StatusBar";
 import TabBar from "./components/TabBar";
@@ -492,10 +496,24 @@ function App() {
   const handleSave = useCallback(async () => {
     if (activeTab.filePath) {
       try {
-        await invoke("write_file", {
-          path: activeTab.filePath,
-          content: activeTab.content,
+        const format = detectFormat(activeTab.filePath);
+        const result = convertContent(activeTab.content, format, {
+          fontSize: activeTab.fontSize,
+          fontFamily: activeTab.fontFamily,
+          title: activeTab.title,
         });
+
+        if (result.type === "binary") {
+          await invoke("write_binary_file", {
+            path: activeTab.filePath,
+            data: Array.from(new Uint8Array(result.data)),
+          });
+        } else {
+          await invoke("write_file", {
+            path: activeTab.filePath,
+            content: result.data,
+          });
+        }
         updateTab(activeTabId, { isModified: false });
       } catch (err) {
         console.error("Failed to save file:", err);
@@ -513,26 +531,41 @@ function App() {
       const filePath = await save({
         defaultPath: defaultName,
         filters: [
-          { name: "All Files", extensions: ["*"] },
           { name: "Text Files", extensions: ["txt"] },
-          { name: "Markdown Files", extensions: ["md"] },
-          { name: "JSON Files", extensions: ["json"] },
-          { name: "Config Files", extensions: ["config", "cfg", "ini", "toml", "yaml", "yml"] },
-          { name: "Log Files", extensions: ["log"] },
           { name: "CSV Files", extensions: ["csv"] },
+          { name: "JSON Files", extensions: ["json"] },
           { name: "XML Files", extensions: ["xml"] },
+          { name: "PDF Files", extensions: ["pdf"] },
           { name: "HTML Files", extensions: ["html", "htm"] },
           { name: "CSS Files", extensions: ["css"] },
           { name: "JavaScript Files", extensions: ["js"] },
           { name: "TypeScript Files", extensions: ["ts"] },
+          { name: "Config Files", extensions: ["config", "cfg", "ini", "toml", "yaml", "yml"] },
+          { name: "Log Files", extensions: ["log"] },
+          { name: "All Files", extensions: ["*"] },
         ],
       });
 
       if (filePath) {
-        await invoke("write_file", {
-          path: filePath,
-          content: activeTab.content,
+        const format = detectFormat(filePath);
+        const result = convertContent(activeTab.content, format, {
+          fontSize: activeTab.fontSize,
+          fontFamily: activeTab.fontFamily,
+          title: activeTab.title,
         });
+
+        if (result.type === "binary") {
+          await invoke("write_binary_file", {
+            path: filePath,
+            data: Array.from(new Uint8Array(result.data)),
+          });
+        } else {
+          await invoke("write_file", {
+            path: filePath,
+            content: result.data,
+          });
+        }
+
         const fileName = filePath.split("\\").pop()?.split("/").pop() ?? "Untitled";
         updateTab(activeTabId, {
           filePath,
@@ -603,17 +636,49 @@ function App() {
 
     try {
       if (tab.filePath) {
-        await invoke("write_file", { path: tab.filePath, content: tab.content });
+        const format = detectFormat(tab.filePath);
+        const result = convertContent(tab.content, format, {
+          fontSize: tab.fontSize,
+          fontFamily: tab.fontFamily,
+          title: tab.title,
+        });
+
+        if (result.type === "binary") {
+          await invoke("write_binary_file", {
+            path: tab.filePath,
+            data: Array.from(new Uint8Array(result.data)),
+          });
+        } else {
+          await invoke("write_file", { path: tab.filePath, content: result.data });
+        }
         doCloseTab(tabId);
       } else {
         const filePath = await save({
           filters: [
             { name: "Text Files", extensions: ["txt"] },
+            { name: "CSV Files", extensions: ["csv"] },
+            { name: "JSON Files", extensions: ["json"] },
+            { name: "XML Files", extensions: ["xml"] },
+            { name: "PDF Files", extensions: ["pdf"] },
             { name: "All Files", extensions: ["*"] },
           ],
         });
         if (filePath) {
-          await invoke("write_file", { path: filePath, content: tab.content });
+          const format = detectFormat(filePath);
+          const result = convertContent(tab.content, format, {
+            fontSize: tab.fontSize,
+            fontFamily: tab.fontFamily,
+            title: tab.title,
+          });
+
+          if (result.type === "binary") {
+            await invoke("write_binary_file", {
+              path: filePath,
+              data: Array.from(new Uint8Array(result.data)),
+            });
+          } else {
+            await invoke("write_file", { path: filePath, content: result.data });
+          }
           doCloseTab(tabId);
         }
         // If user cancelled the save dialog, don't close the tab
