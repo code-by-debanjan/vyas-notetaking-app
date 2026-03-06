@@ -244,7 +244,7 @@ function MenuBar({
             <span className="about-title">VYAS</span>
             <span className="about-subtitle">: Compile Your Epic</span>
           </div>
-          <div className="about-version">Version 1.2.1</div>
+          <div className="about-version">Version 1.2.2</div>
           <div className="about-tagline">✦ For Indians, By an Indian ✦</div>
           <div className="about-copyright">Copyright (c) 2026 Debanjan Bhattacharya<br/>Licensed under the MIT License</div>
           <button className="about-close" onClick={() => setShowAbout(false)}>OK</button>

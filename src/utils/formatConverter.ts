@@ -4,6 +4,7 @@
 // See LICENSE.txt for details
 
 import { jsPDF } from "jspdf";
+import { invoke } from "@tauri-apps/api/core";
 
 /**
  * Supported export formats for Save / Save As.
@@ -119,14 +120,17 @@ export function convertToXML(content: string): string {
 
 /**
  * Generate a PDF from plain text content and return as Uint8Array.
- * Uses the specified font size and font family.
+ * Uses the specified font size and embeds the actual editor font.
  */
-export function convertToPDF(
+export async function convertToPDF(
   content: string,
   options?: { fontSize?: number; fontFamily?: string; title?: string }
-): Uint8Array {
-  const fontSize = options?.fontSize ?? 12;
-  const title = options?.title ?? "Document";
+): Promise<Uint8Array> {
+  const fontSizePx = options?.fontSize ?? 12;
+  const fontFamily = options?.fontFamily ?? "";
+
+  // Convert CSS pixels to PDF points (1pt = 1.333px, so 1px = 0.75pt)
+  const fontSize = fontSizePx * 0.75;
 
   const doc = new jsPDF({
     orientation: "portrait",
@@ -138,25 +142,41 @@ export function convertToPDF(
   const pageHeight = doc.internal.pageSize.getHeight();
   const margin = 15;
   const usableWidth = pageWidth - margin * 2;
-  const lineHeight = (fontSize * 0.3528) * 1.5; // Convert pt to mm with 1.5 line spacing
+  const lineHeight = (fontSize * 0.3528) * 1.5;
 
-  // Set font — jsPDF supports helvetica, courier, times by default
-  doc.setFont("helvetica");
+  // Try to load and embed the actual system font
+  let fontName = "helvetica";
+  try {
+    const fontData: number[] = await invoke("get_font_data", { family: fontFamily });
+    const fontBytes = new Uint8Array(fontData);
+    // Convert to base64 for jsPDF
+    let binary = "";
+    for (let i = 0; i < fontBytes.length; i++) {
+      binary += String.fromCharCode(fontBytes[i]);
+    }
+    const base64 = btoa(binary);
+    const safeName = fontFamily.replace(/[^a-zA-Z0-9]/g, "");
+    doc.addFileToVFS(`${safeName}.ttf`, base64);
+    doc.addFont(`${safeName}.ttf`, safeName, "normal");
+    fontName = safeName;
+  } catch {
+    // Fallback: map to closest jsPDF built-in font
+    const fl = fontFamily.toLowerCase();
+    if (fl.includes("courier") || fl.includes("mono") || fl.includes("consolas") || fl.includes("cascadia")) {
+      fontName = "courier";
+    } else if (fl.includes("times") || fl.includes("serif") || fl.includes("georgia")) {
+      fontName = "times";
+    }
+  }
+
+  doc.setFont(fontName);
   doc.setFontSize(fontSize);
 
-  // Add title
-  doc.setFontSize(fontSize + 4);
-  doc.setFont("helvetica", "bold");
-  doc.text(title, margin, margin + 5);
-  doc.setFont("helvetica", "normal");
-  doc.setFontSize(fontSize);
-
-  let y = margin + 12;
+  let y = margin;
 
   const lines = content.split("\n");
 
   for (const line of lines) {
-    // Wrap long lines using jsPDF's splitTextToSize
     const wrappedLines: string[] = line === ""
       ? [""]
       : doc.splitTextToSize(line, usableWidth);
@@ -171,7 +191,6 @@ export function convertToPDF(
     }
   }
 
-  // Return as Uint8Array (binary PDF data)
   return doc.output("arraybuffer") as unknown as Uint8Array;
 }
 
@@ -179,11 +198,11 @@ export function convertToPDF(
  * Convert content to the target format. Returns the converted string
  * content for text-based formats, or a Uint8Array for binary formats (PDF).
  */
-export function convertContent(
+export async function convertContent(
   content: string,
   format: ExportFormat,
   options?: { fontSize?: number; fontFamily?: string; title?: string }
-): { type: "text"; data: string } | { type: "binary"; data: Uint8Array } {
+): Promise<{ type: "text"; data: string } | { type: "binary"; data: Uint8Array }> {
   switch (format) {
     case "csv":
       return { type: "text", data: convertToCSV(content) };
@@ -192,7 +211,7 @@ export function convertContent(
     case "xml":
       return { type: "text", data: convertToXML(content) };
     case "pdf":
-      return { type: "binary", data: convertToPDF(content, options) };
+      return { type: "binary", data: await convertToPDF(content, options) };
     default:
       return { type: "text", data: content };
   }
