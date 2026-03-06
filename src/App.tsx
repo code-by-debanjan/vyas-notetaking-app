@@ -10,6 +10,8 @@ import { listen } from "@tauri-apps/api/event";
 import { open, save } from "@tauri-apps/plugin-dialog";
 import html2canvas from "html2canvas";
 import { detectFormat, convertContent } from "./utils/formatConverter";
+import { platform } from "./utils/platform";
+import TitleBar from "./components/TitleBar";
 import MenuBar from "./components/MenuBar";
 import StatusBar from "./components/StatusBar";
 import TabBar from "./components/TabBar";
@@ -448,7 +450,16 @@ function App() {
       const filePath = await open({
         multiple: false,
         filters: [
-          { name: "Text Files", extensions: ["txt", "md", "json", "js", "ts", "html", "css", "xml", "csv", "log"] },
+          { name: "Text Files", extensions: ["txt"] },
+          { name: "CSV Files", extensions: ["csv"] },
+          { name: "JSON Files", extensions: ["json"] },
+          { name: "XML Files", extensions: ["xml"] },
+          { name: "HTML Files", extensions: ["html", "htm"] },
+          { name: "CSS Files", extensions: ["css"] },
+          { name: "JavaScript Files", extensions: ["js"] },
+          { name: "TypeScript Files", extensions: ["ts"] },
+          { name: "Config Files", extensions: ["config", "cfg", "ini", "toml", "yaml", "yml"] },
+          { name: "Log Files", extensions: ["log"] },
           { name: "All Files", extensions: ["*"] },
         ],
       });
@@ -497,7 +508,7 @@ function App() {
     if (activeTab.filePath) {
       try {
         const format = detectFormat(activeTab.filePath);
-        const result = convertContent(activeTab.content, format, {
+        const result = await convertContent(activeTab.content, format, {
           fontSize: activeTab.fontSize,
           fontFamily: activeTab.fontFamily,
           title: activeTab.title,
@@ -548,7 +559,7 @@ function App() {
 
       if (filePath) {
         const format = detectFormat(filePath);
-        const result = convertContent(activeTab.content, format, {
+        const result = await convertContent(activeTab.content, format, {
           fontSize: activeTab.fontSize,
           fontFamily: activeTab.fontFamily,
           title: activeTab.title,
@@ -637,7 +648,7 @@ function App() {
     try {
       if (tab.filePath) {
         const format = detectFormat(tab.filePath);
-        const result = convertContent(tab.content, format, {
+        const result = await convertContent(tab.content, format, {
           fontSize: tab.fontSize,
           fontFamily: tab.fontFamily,
           title: tab.title,
@@ -665,7 +676,7 @@ function App() {
         });
         if (filePath) {
           const format = detectFormat(filePath);
-          const result = convertContent(tab.content, format, {
+          const result = await convertContent(tab.content, format, {
             fontSize: tab.fontSize,
             fontFamily: tab.fontFamily,
             title: tab.title,
@@ -846,32 +857,7 @@ function App() {
 
   return (
     <div className={`app ${theme}`} ref={appRef}>
-      <div className="title-bar">
-        <div className="title-bar-text">
-          <img src="/logo.png" alt="Vyas" className="title-bar-logo" />
-          <span className="title-bar-name">VYAS</span>
-          <span className="title-bar-separator"> : </span>
-          <span className="title-bar-tagline">Compile Your Epic</span>
-        </div>
-        <div className="title-bar-controls">
-          <button className="title-bar-btn minimize" onClick={() => getCurrentWindow().minimize()} aria-label="Minimize">
-            <svg width="10" height="1" viewBox="0 0 10 1"><rect width="10" height="1" fill="currentColor"/></svg>
-          </button>
-          <button className="title-bar-btn maximize" onClick={async () => { await getCurrentWindow().toggleMaximize(); }} aria-label={isMaximized ? "Restore" : "Maximize"}>
-            {isMaximized ? (
-              <svg width="10" height="10" viewBox="0 0 10 10">
-                <rect x="2" y="0" width="8" height="8" rx="1" fill="none" stroke="currentColor" strokeWidth="1"/>
-                <rect x="0" y="2" width="8" height="8" rx="1" fill="var(--bg-primary)" stroke="currentColor" strokeWidth="1"/>
-              </svg>
-            ) : (
-              <svg width="10" height="10" viewBox="0 0 10 10"><rect x="1" y="1" width="8" height="8" rx="1" fill="none" stroke="currentColor" strokeWidth="1"/></svg>
-            )}
-          </button>
-          <button className="title-bar-btn close" onClick={() => getCurrentWindow().close()} aria-label="Close">
-            <svg width="10" height="10" viewBox="0 0 10 10"><line x1="1" y1="1" x2="9" y2="9" stroke="currentColor" strokeWidth="1.2"/><line x1="9" y1="1" x2="1" y2="9" stroke="currentColor" strokeWidth="1.2"/></svg>
-          </button>
-        </div>
-      </div>
+      <TitleBar platform={platform} isMaximized={isMaximized} />
       <MenuBar
         onNew={handleNew}
         onOpen={handleOpen}

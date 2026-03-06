@@ -160,6 +160,130 @@ html, body, #root {
   color: #ffffff;
 }
 
+/* === macOS Title Bar === */
+.title-bar-macos {
+  flex-direction: row;
+  padding: 0 12px;
+}
+
+.title-bar-macos .title-bar-text {
+  flex: 1;
+  justify-content: center;
+}
+
+.macos-spacer {
+  width: 52px;
+  flex-shrink: 0;
+}
+
+.macos-controls {
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.macos-btn {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  color: transparent;
+  transition: filter 0.15s;
+  -webkit-app-region: no-drag;
+}
+
+.macos-btn svg {
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.macos-controls:hover .macos-btn svg {
+  opacity: 1;
+}
+
+.macos-close {
+  background: #ff5f57;
+}
+
+.macos-close:hover {
+  filter: brightness(0.85);
+  color: #4d0000;
+}
+
+.macos-minimize {
+  background: #febc2e;
+}
+
+.macos-minimize:hover {
+  filter: brightness(0.85);
+  color: #4d3800;
+}
+
+.macos-maximize {
+  background: #28c840;
+}
+
+.macos-maximize:hover {
+  filter: brightness(0.85);
+  color: #004d00;
+}
+
+.macos-controls:hover .macos-close {
+  color: #4d0000;
+}
+
+.macos-controls:hover .macos-minimize {
+  color: #4d3800;
+}
+
+.macos-controls:hover .macos-maximize {
+  color: #004d00;
+}
+
+/* Inactive state: gray dots when window loses focus */
+.app.window-blurred .macos-btn {
+  background: var(--text-muted);
+}
+
+/* === Linux (GNOME) Title Bar === */
+.title-bar-linux {
+  padding: 0 8px;
+}
+
+.linux-controls {
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.linux-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  -webkit-app-region: no-drag;
+}
+
+.linux-btn:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.linux-btn.linux-close:hover {
+  background: #e04040;
+  color: #ffffff;
+}
+
 /* === Menu Bar === */
 .menu-bar {
   display: flex;

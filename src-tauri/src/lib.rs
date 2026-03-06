@@ -102,6 +102,87 @@ fn get_system_fonts() -> Result<Vec<String>, String> {
 }
 
 #[tauri::command]
+fn get_font_data(family: String) -> Result<Vec<u8>, String> {
+    // Find font file path from system registry/font directories
+    let font_path = find_font_file(&family)?;
+    fs::read(&font_path).map_err(|e| format!("Failed to read font file: {}", e))
+}
+
+#[cfg(target_os = "windows")]
+fn find_font_file(family: &str) -> Result<PathBuf, String> {
+    use std::process::Command;
+    let family_lower = family.to_lowercase();
+
+    // Search both system (HKLM) and user (HKCU) font registries
+    let reg_keys = [
+        r"HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts",
+        r"HKCU\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts",
+    ];
+
+    for reg_key in &reg_keys {
+        let output = Command::new("reg")
+            .args(["query", reg_key, "/s"])
+            .output()
+            .map_err(|e| format!("Failed to query font registry: {}", e))?;
+        let stdout = String::from_utf8_lossy(&output.stdout);
+        for line in stdout.lines() {
+            let line_lower = line.to_lowercase();
+            if line_lower.contains(&family_lower) {
+                if let Some(pos) = line.find("REG_SZ") {
+                    let filename = line[pos + 6..].trim();
+                    let path = if std::path::Path::new(filename).is_absolute() {
+                        PathBuf::from(filename)
+                    } else {
+                        PathBuf::from(r"C:\Windows\Fonts").join(filename)
+                    };
+                    if path.exists() {
+                        return Ok(path);
+                    }
+                }
+            }
+        }
+    }
+    Err(format!("Font file not found for family: {}", family))
+}
+
+#[cfg(target_os = "macos")]
+fn find_font_file(family: &str) -> Result<PathBuf, String> {
+    let font_dirs = [
+        PathBuf::from("/Library/Fonts"),
+        PathBuf::from("/System/Library/Fonts"),
+        dirs::home_dir().map(|h| h.join("Library/Fonts")).unwrap_or_default(),
+    ];
+    let family_lower = family.to_lowercase();
+    for dir in &font_dirs {
+        if let Ok(entries) = fs::read_dir(dir) {
+            for entry in entries.flatten() {
+                let name = entry.file_name().to_string_lossy().to_lowercase();
+                if name.contains(&family_lower) && (name.ends_with(".ttf") || name.ends_with(".otf") || name.ends_with(".ttc")) {
+                    return Ok(entry.path());
+                }
+            }
+        }
+    }
+    Err(format!("Font file not found for family: {}", family))
+}
+
+#[cfg(target_os = "linux")]
+fn find_font_file(family: &str) -> Result<PathBuf, String> {
+    // Use fc-match to find the font file
+    let output = std::process::Command::new("fc-match")
+        .args(["--format=%{file}", family])
+        .output()
+        .map_err(|e| format!("Failed to run fc-match: {}", e))?;
+    let path_str = String::from_utf8_lossy(&output.stdout).trim().to_string();
+    let path = PathBuf::from(&path_str);
+    if path.exists() {
+        Ok(path)
+    } else {
+        Err(format!("Font file not found for family: {}", family))
+    }
+}
+
+#[tauri::command]
 fn show_in_explorer(path: String) -> Result<(), String> {
     let file_path = std::path::Path::new(&path);
     let folder = if file_path.is_file() {
@@ -115,6 +196,20 @@ fn show_in_explorer(path: String) -> Result<(), String> {
             .arg(folder)
             .spawn()
             .map_err(|e| format!("Failed to open explorer: {}", e))?;
+    }
+    #[cfg(target_os = "macos")]
+    {
+        std::process::Command::new("open")
+            .arg(folder)
+            .spawn()
+            .map_err(|e| format!("Failed to open Finder: {}", e))?;
+    }
+    #[cfg(target_os = "linux")]
+    {
+        std::process::Command::new("xdg-open")
+            .arg(folder)
+            .spawn()
+            .map_err(|e| format!("Failed to open file manager: {}", e))?;
     }
     Ok(())
 }
@@ -141,9 +236,9 @@ fn write_binary_file(path: String, data: Vec<u8>) -> Result<(), String> {
 
 #[tauri::command]
 fn get_pictures_dir() -> Result<String, String> {
-    let pictures = dirs::picture_dir()
-        .ok_or_else(|| "Could not determine Pictures directory".to_string())?;
-    let vyas_dir = pictures.join("Vyas");
+    let desktop = dirs::desktop_dir()
+        .ok_or_else(|| "Could not determine Desktop directory".to_string())?;
+    let vyas_dir = desktop.join("Vyas");
     Ok(vyas_dir.to_string_lossy().to_string())
 }
 
@@ -208,7 +303,7 @@ pub fn run() {
                 }
             }
         }))
-        .invoke_handler(tauri::generate_handler![read_file, write_file, write_binary_file, get_system_fonts, get_pictures_dir, save_screenshot, get_cli_file_arg, save_session, load_session, save_recent_files, load_recent_files, show_in_explorer])
+        .invoke_handler(tauri::generate_handler![read_file, write_file, write_binary_file, get_system_fonts, get_font_data, get_pictures_dir, save_screenshot, get_cli_file_arg, save_session, load_session, save_recent_files, load_recent_files, show_in_explorer])
         .setup(|app| {
             let icon_bytes = include_bytes!("../icons/icon.png");
             let icon = tauri::image::Image::from_bytes(icon_bytes)?;
