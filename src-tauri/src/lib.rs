@@ -236,9 +236,9 @@ fn write_binary_file(path: String, data: Vec<u8>) -> Result<(), String> {
 
 #[tauri::command]
 fn get_pictures_dir() -> Result<String, String> {
-    let pictures = dirs::picture_dir()
-        .ok_or_else(|| "Could not determine Pictures directory".to_string())?;
-    let vyas_dir = pictures.join("Vyas");
+    let desktop = dirs::desktop_dir()
+        .ok_or_else(|| "Could not determine Desktop directory".to_string())?;
+    let vyas_dir = desktop.join("Vyas");
     Ok(vyas_dir.to_string_lossy().to_string())
 }
 
