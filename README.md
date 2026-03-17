@@ -9,7 +9,7 @@
 A powerful, lightweight desktop note-taking app built with **Tauri 2 + React + TypeScript**.  
 Glass-effect styling. System fonts. Side-by-side diffing. Screenshot capture. All in ~5MB.
 
-_For Indians, by an Indian._ 🇮🇳
+_With Love, from India._ 🇮🇳
 
 [![Version](https://img.shields.io/badge/version-1.2.3-7c3aed?style=for-the-badge)](https://github.com/code-by-debanjan/vyas-notetaking-app/releases)
 [![Built with Tauri](https://img.shields.io/badge/Built_with-Tauri_2-ffc131?style=for-the-badge&logo=tauri&logoColor=white)](https://v2.tauri.app/)
@@ -144,7 +144,7 @@ _For Indians, by an Indian._ 🇮🇳
 
 ---
 
-##  Project Structure
+## Project Structure
 
 ```
 vyas-notetaking-app/
