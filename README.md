@@ -144,51 +144,7 @@ _For Indians, by an Indian._ 🇮🇳
 
 ---
 
-## 🚀 Getting Started
-
-### Prerequisites
-
-| Tool               | Required     | Install                          |
-| :----------------- | :----------- | :------------------------------- |
-| **Node.js**        | v18+         | [nodejs.org](https://nodejs.org) |
-| **Rust**           | latest       | [rustup.rs](https://rustup.rs)   |
-| **VS Build Tools** | Windows only | See below                        |
-
-<details>
-<summary><b>Install Visual Studio Build Tools (Windows)</b></summary>
-
-```powershell
-# Run as Administrator:
-winget install Microsoft.VisualStudio.2022.BuildTools --override "--wait --passive --add Microsoft.VisualStudio.Workload.VCTools --includeRecommended"
-```
-
-</details>
-
-### Development
-
-```bash
-# Install dependencies
-npm install
-
-# Start development (hot-reload frontend + Rust backend)
-npm run tauri dev
-```
-
-### Production Build
-
-```bash
-npm run tauri build
-```
-
-Output:
-
-- **Executable** → `src-tauri/target/release/vyas-notetaking-app.exe`
-- **MSI Installer** → `src-tauri/target/release/bundle/msi/`
-- **NSIS Installer** → `src-tauri/target/release/bundle/nsis/`
-
----
-
-## 📁 Project Structure
+##  Project Structure
 
 ```
 vyas-notetaking-app/
