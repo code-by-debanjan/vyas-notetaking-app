@@ -9,7 +9,7 @@
 A powerful, lightweight desktop note-taking app built with **Tauri 2 + React + TypeScript**.  
 Glass-effect styling. System fonts. Side-by-side diffing. Screenshot capture. All in ~5MB.
 
-_For Indians, by an Indian._ 🇮🇳
+_With Love, from India._ 🇮🇳
 
 [![Version](https://img.shields.io/badge/version-1.2.3-7c3aed?style=for-the-badge)](https://github.com/code-by-debanjan/vyas-notetaking-app/releases)
 [![Built with Tauri](https://img.shields.io/badge/Built_with-Tauri_2-ffc131?style=for-the-badge&logo=tauri&logoColor=white)](https://v2.tauri.app/)
@@ -144,51 +144,7 @@ _For Indians, by an Indian._ 🇮🇳
 
 ---
 
-## 🚀 Getting Started
-
-### Prerequisites
-
-| Tool               | Required     | Install                          |
-| :----------------- | :----------- | :------------------------------- |
-| **Node.js**        | v18+         | [nodejs.org](https://nodejs.org) |
-| **Rust**           | latest       | [rustup.rs](https://rustup.rs)   |
-| **VS Build Tools** | Windows only | See below                        |
-
-<details>
-<summary><b>Install Visual Studio Build Tools (Windows)</b></summary>
-
-```powershell
-# Run as Administrator:
-winget install Microsoft.VisualStudio.2022.BuildTools --override "--wait --passive --add Microsoft.VisualStudio.Workload.VCTools --includeRecommended"
-```
-
-</details>
-
-### Development
-
-```bash
-# Install dependencies
-npm install
-
-# Start development (hot-reload frontend + Rust backend)
-npm run tauri dev
-```
-
-### Production Build
-
-```bash
-npm run tauri build
-```
-
-Output:
-
-- **Executable** → `src-tauri/target/release/vyas-notetaking-app.exe`
-- **MSI Installer** → `src-tauri/target/release/bundle/msi/`
-- **NSIS Installer** → `src-tauri/target/release/bundle/nsis/`
-
----
-
-## 📁 Project Structure
+## Project Structure
 
 ```
 vyas-notetaking-app/
