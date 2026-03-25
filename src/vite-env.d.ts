@@ -4,3 +4,5 @@
 // See LICENSE.txt for details
 
 /// <reference types="vite/client" />
+
+declare const __APP_VERSION__: string;
